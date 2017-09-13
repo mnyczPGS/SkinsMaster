@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --hot --inline",
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "author": "Nyczu92",
   "license": "MIT",
