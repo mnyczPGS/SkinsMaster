@@ -10,7 +10,10 @@
   "author": "Nyczu92",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "bootstrap": "^4.0.0-alpha.6",
+    "cors": "^2.8.4",
+    "passport-steam": "^1.0.8",
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.6.0",
     "react-addons-transition-group": "^15.6.0",

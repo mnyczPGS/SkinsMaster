@@ -2,17 +2,17 @@ var path = require('path');
 require.extensions['.scss'] = function () { }
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: __dirname + '/app/index.html',
+  template: __dirname + '/src/index.html',
   filename: 'index.html',
   inject: 'body'
 });
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  context: __dirname + "/app",
+  context: __dirname + "/src",
 
   entry: {
-    javascript: './js/index.js',
+    javascript: './app/index.js',
   },
 
   output: {
@@ -54,7 +54,17 @@ module.exports = {
         }, {
           loader: "sass-loader" // compiles Sass to CSS
         }]
-      }
+      },
+      {
+        test: /\.css$/,
+        use: [{
+          loader: "style-loader" // creates style nodes from JS strings
+        }, {
+          loader: "css-loader" // translates CSS into CommonJS
+        }]
+      },
+      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
+      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
     ]
   },
   resolve: {
@@ -66,6 +76,8 @@ module.exports = {
   plugins: [HTMLWebpackPluginConfig],
   devServer: {
     historyApiFallback: true,
+    contentBase: './',
+    hot: true,
     port: 3000
   }
 };

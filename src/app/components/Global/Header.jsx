@@ -22,7 +22,7 @@ export default class Menu extends Component {
         <Navbar color="faded" light toggleable>
           <NavbarToggler right onClick={this.toggle} />
           <NavbarBrand href="/">reactstrap</NavbarBrand>
-          <Collapse isOpen={this.state.isOpen} navbar>
+          <Collapse isOpen={this.state.isOpen} >
             <Nav className="ml-auto" navbar>
               <NavItem>
                 <Link className="nav-link" to='/'>Home</Link>
