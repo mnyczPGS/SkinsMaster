@@ -37928,14 +37928,14 @@ var Menu = function (_Component) {
   }, {
     key: 'logIn',
     value: function logIn() {
-      window.open('http://localhost:8000/api/v1/user/auth/login', "_self");
+      window.open('/api/v1/user/auth/login', "_self");
     }
   }, {
     key: 'getUser',
     value: function getUser() {
       var _this2 = this;
 
-      fetch('http://localhost:8000/api/v1/user/auth/account', { method: "GET", credentials: 'include', mode: 'no-cors' }).then(function (data) {
+      fetch('/api/v1/user/auth/account', { method: "GET", credentials: 'include', mode: 'no-cors' }).then(function (data) {
         return 'Account: ', data.json();
       }).then(function (user) {
         console.log(user);
