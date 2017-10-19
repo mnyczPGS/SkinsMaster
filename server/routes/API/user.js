@@ -16,8 +16,8 @@ var path = require('path')
   });
   
   passport.use(new SteamStrategy({
-    returnURL: 'http://localhost:8000/api/v1/user/auth/return',
-    realm: 'http://localhost:8000/',
+    returnURL: '/api/v1/user/auth/return',
+    realm: '/',
     apiKey: config.key
   },
     function (identifier, profile, done) {
@@ -35,26 +35,11 @@ var path = require('path')
   ));
   
 
-
-
-
-router.post('/', function (req, res) {
-  console.log('req', req.body)
-  var url = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${config.key}&steamid=${config.id}&include_appinfo=1`;
-  var url1 = 'https://api.steampowered.com/IEconItems_730/GetSchema/v0002/?key=8EA076358F99E86424EC22B64ADE01C3&SteamID=76561198145597332'; //all items
-  var url2 = 'http://steamcommunity.com/inventory/76561198145597332/730/2?l=polish&count=5000'
-
-  request.get(url2, function (error, steamHttpResponse, steamHttpBody) {
-    res.send(steamHttpBody);
-  });
-});
-
 router.get('/auth/login', 
 passport.authenticate('steam', { failureRedirect: '/' }),
 function (req, res) {
   console.log('login')
   req.login();
-    res.redirect('https://google.pl');
   });
 
 // router.get('/auth/return',
@@ -109,7 +94,7 @@ function ensureAuthenticated(req, res, next) {
 
   if (req.isAuthenticated()) { return next(); }
   res.send(req);
-  res.redirect('/asd');
+  res.redirect('/');
 }
 
 module.exports = router;

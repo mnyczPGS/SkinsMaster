@@ -33,10 +33,10 @@ export default class Menu extends Component {
     });
   }
   logIn() {
-    window.open('http://localhost:8000/api/v1/user/auth/login', "_self")
+    window.open('/api/v1/user/auth/login', "_self")
   }
   getUser() {
-    fetch('http://localhost:8000/api/v1/user/auth/account', { method: "GET", credentials: 'include', mode: 'no-cors' })
+    fetch('/api/v1/user/auth/account', { method: "GET", credentials: 'include', mode: 'no-cors' })
       .then((data) => { return ('Account: ', data.json()) })
       .then((user) => {
         console.log(user)
