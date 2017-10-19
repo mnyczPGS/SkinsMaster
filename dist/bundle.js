@@ -38303,7 +38303,7 @@ var Home = function (_Component) {
       myHeaders.append("Content-Type", "application/json");
       var fetchData = { headers: myHeaders, method: "GET" };
       var players = [];
-      fetch('http://localhost:8000/api/v1/steam/' + id, fetchData).then(function (data) {
+      fetch('/api/v1/steam/' + id, fetchData).then(function (data) {
         return data.json();
       }).then(function (data) {
         players = _this2.state.players;
@@ -38328,7 +38328,7 @@ var Home = function (_Component) {
       fetchData.body = JSON.stringify({ 'id': '' + id });
       console.log(id);
 
-      fetch('http://localhost:8000/api/v1/user/inventory', fetchData).then(function (data) {
+      fetch('/api/v1/user/inventory', fetchData).then(function (data) {
         return data.json();
       }).then(function (inventory) {
         console.log(inventory.descriptions);
@@ -38348,7 +38348,7 @@ var Home = function (_Component) {
       fetchData.body = JSON.stringify({ 'name': '' + name.split('™').join('%E2%84%A2') });
       // console.log(name);
 
-      fetch('http://localhost:8000/api/v1/user/price', fetchData).then(function (data) {
+      fetch('/api/v1/user/price', fetchData).then(function (data) {
         return data.json();
       }).then(function (inventory) {
         console.log('inv', inventory);
