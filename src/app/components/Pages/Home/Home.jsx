@@ -42,7 +42,7 @@ class Home extends Component {
     myHeaders.append("Content-Type", "application/json");
     let fetchData = { headers: myHeaders, method: "GET" }
     let players = [];
-    fetch('http://localhost:8000/api/v1/steam/' + id, fetchData)
+    fetch('/api/v1/steam/' + id, fetchData)
       .then((data) => { return (data.json()) })
       .then((data) => {
         players = this.state.players;
@@ -64,7 +64,7 @@ class Home extends Component {
     fetchData.body = JSON.stringify({ 'id': `${id}` })
     console.log(id);
 
-    fetch('http://localhost:8000/api/v1/user/inventory', fetchData)
+    fetch('/api/v1/user/inventory', fetchData)
       .then((data) => { return (data.json()) })
       .then((inventory) => {
         console.log(inventory.descriptions);
@@ -83,7 +83,7 @@ class Home extends Component {
     fetchData.body = JSON.stringify({ 'name': `${name.split('™').join('%E2%84%A2')}` })
     // console.log(name);
 
-    fetch('http://localhost:8000/api/v1/user/price', fetchData)
+    fetch('/api/v1/user/price', fetchData)
       .then((data) => { return (data.json()) })
       .then((inventory) => {
         console.log('inv',inventory);
