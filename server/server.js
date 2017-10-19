@@ -1,16 +1,33 @@
 // PACKAGES //
-var path = require('path');
-var fs = require('fs');
-var cors = require('cors');
-var express = require('express');
+var path = require('path')
+  , fs = require('fs')
+  , cors = require('cors')
+  , express = require('express')
+  , bodyParser = require("body-parser")
+  , passportSteam = require('passport-steam')
+  , session = require('express-session')
+  , passport = require('passport');
 
 // IMPORT //
-var steamRoutes = require('./routes/steamRoutes');
+var apiRoutes = require('./routes/api');
 var indexRoutes = require('./routes/index');
+var userRoutes = require('./routes/API/user');
 var config = require('./config');
+
 
 // CREATE APP //
 var app = express();
+// app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
+app.use(session({
+  secret: 'qwertyuiop',
+  name: 'skinsmaster',
+  resave: true,
+  saveUninitialized: true}));
+  app.use(passport.initialize());
+  app.use(passport.session());
 
 // VIEW ENGINE //
 app.set('view engine', 'html');
@@ -26,7 +43,14 @@ var corsOptions = {
 }
 
 // ROUTES //
-app.use('/api/v1/',cors(corsOptions), steamRoutes)
+app.use('/api/v1/', cors(corsOptions), apiRoutes)
+// app.use('/api/v1/',cors(corsOptions), userRoutes)
+// app.post('/test',function(req,res){
+//   var user_name=req.body.id;
+//   var password=req.body.id;
+//   console.log("User name = "+user_name+", password is "+password, req.body);
+//   res.send("yes");
+// });
 app.use('/*', indexRoutes);
 
 app.use(function (err, req, res, next) {
