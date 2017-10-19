@@ -4,7 +4,7 @@
   "description": "Skins shop",
   "main": "index.js",
   "scripts": {
-    "start": "webpack && node bin/www",
+    "start": "node bin/www",
     "dev": "webpack-dev-server --hot --inline"
   },
   "author": "Nyczu92",
