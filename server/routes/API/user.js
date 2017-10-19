@@ -17,7 +17,7 @@ var path = require('path')
   
   passport.use(new SteamStrategy({
     returnURL: 'https://skinsmaster.herokuapp.com/api/v1/user/auth/return',
-    realm: '/',
+    realm: 'https://skinsmaster.herokuapp.com/',
     apiKey: config.key
   },
     function (identifier, profile, done) {
