@@ -86,8 +86,7 @@ class Home extends Component {
           onClick={(e) => { e.preventDefault(); this.props.dispatch(showAlert('This alert can be changed from other component :D')); }}>
           Show alert
         </Button>
-        <img src="https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbaqKAxf0uL3djFN79fnzL-Nm_b5NqjulGdE7fp5j-jX7MKn2VW3-UE_Yz-gJo-ScQBrYA3V81m6xru-hsTpuMiYwXNn7yIl7CrcgVXp1p__7duw" alt="" />
-
+        
         <Container>
         <Row>
         {

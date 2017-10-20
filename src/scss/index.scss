@@ -1,12 +1,28 @@
 body {
   .Header {
-    height: 56px;
+    height: 80px;
+
+    .navbar{
+      background-color: lightgray;
+
+      .nav-link{
+        line-height: 45px; 
+        margin-left: 10px;
+        cursor: pointer;
+
+        img{
+          height: 45px;
+        }
+      }
+    }
   }
 
   .Content {
+    background-color: #2b2b2b;
+    color: white;
     min-height: 100vh;
-    margin-top: -56px;
-    padding-top: 56px;
+    margin-top: -80px;
+    padding-top: 80px;
   }
 
   .Footer {
@@ -19,5 +35,23 @@ body {
     position: absolute;
     right: 0;
     z-index: 99;
+  }
+
+  .navMobile{
+    display: none;
+  }
+
+  .navDesktop{
+    display: flex;
+  }
+
+  @media (max-width: 1000px){
+    .navMobile{
+      display: flex;
+    }
+  
+    .navDesktop{
+      display: none;
+    }
   }
 }
