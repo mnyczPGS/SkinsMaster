@@ -86,7 +86,7 @@ class Home extends Component {
           onClick={(e) => { e.preventDefault(); this.props.dispatch(showAlert('This alert can be changed from other component :D')); }}>
           Show alert
         </Button>
-        <img src="http://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbaqKAxf0uL3djFN79fnzL-Nm_b5NqjulGdE7fp5j-jX7MKn2VW3-UE_Yz-gJo-ScQBrYA3V81m6xru-hsTpuMiYwXNn7yIl7CrcgVXp1p__7duw" alt="" />
+        <img src="https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbaqKAxf0uL3djFN79fnzL-Nm_b5NqjulGdE7fp5j-jX7MKn2VW3-UE_Yz-gJo-ScQBrYA3V81m6xru-hsTpuMiYwXNn7yIl7CrcgVXp1p__7duw" alt="" />
 
         <Container>
         <Row>
@@ -94,7 +94,7 @@ class Home extends Component {
           this.state.inventory.map((item, index) => {
             if (item.tradable) return (
               <Col key={index} style={{ border: `2px solid #${item.name_color}`, borderRadius: '20px', padding: '40px' }}>
-                <div><img src={'http://steamcommunity-a.akamaihd.net/economy/image/' + item.icon_url} alt={item.market_name} /></div>
+                <div><img src={'https://steamcommunity-a.akamaihd.net/economy/image/' + item.icon_url} alt={item.market_name} /></div>
                 <div>{item.market_name}</div>
                 <div><a href={item.instanceid}>Profile</a><br /></div>
                 <div>tradable {item.tradable ? 'true' : 'false'}</div>

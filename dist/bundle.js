@@ -38403,7 +38403,7 @@ var Home = function (_Component) {
             } },
           'Show alert'
         ),
-        _react2.default.createElement('img', { src: 'http://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbaqKAxf0uL3djFN79fnzL-Nm_b5NqjulGdE7fp5j-jX7MKn2VW3-UE_Yz-gJo-ScQBrYA3V81m6xru-hsTpuMiYwXNn7yIl7CrcgVXp1p__7duw', alt: '' }),
+        _react2.default.createElement('img', { src: 'https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbaqKAxf0uL3djFN79fnzL-Nm_b5NqjulGdE7fp5j-jX7MKn2VW3-UE_Yz-gJo-ScQBrYA3V81m6xru-hsTpuMiYwXNn7yIl7CrcgVXp1p__7duw', alt: '' }),
         _react2.default.createElement(
           _reactstrap.Container,
           null,
@@ -38417,7 +38417,7 @@ var Home = function (_Component) {
                 _react2.default.createElement(
                   'div',
                   null,
-                  _react2.default.createElement('img', { src: 'http://steamcommunity-a.akamaihd.net/economy/image/' + item.icon_url, alt: item.market_name })
+                  _react2.default.createElement('img', { src: 'https://steamcommunity-a.akamaihd.net/economy/image/' + item.icon_url, alt: item.market_name })
                 ),
                 _react2.default.createElement(
                   'div',
@@ -38587,8 +38587,8 @@ module.exports = Object.freeze({
   id: '76561198145597332',
   key: '8EA076358F99E86424EC22B64ADE01C3',
   enableDev: false,
-  url: 'http://localhost:8000/'
-  // url: 'https://skinsmaster.herokuapp.com',
+  // url: 'http://localhost:8000/',
+  url: 'https://skinsmaster.herokuapp.com/'
 });
 
 /***/ }),
