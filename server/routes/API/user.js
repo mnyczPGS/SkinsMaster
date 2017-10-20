@@ -1,6 +1,6 @@
 var path = require('path')
   , router = require('express').Router()
-  , config = require('../../config')
+  , config = require('../../../config')
   , passport = require('passport')
   , request = require('request')
   , LocalStrategy = require('passport-local').Strategy
@@ -16,8 +16,8 @@ var path = require('path')
   });
   
   passport.use(new SteamStrategy({
-    returnURL: 'https://skinsmaster.herokuapp.com/api/v1/user/auth/return',
-    realm: 'https://skinsmaster.herokuapp.com/',
+    returnURL: config.url+'api/v1/user/auth/return',
+    realm: config.url,
     apiKey: config.key
   },
     function (identifier, profile, done) {
@@ -53,15 +53,17 @@ router.get('/auth/account', ensureAuthenticated, function (req, res) {
 });
 
 router.get('/auth/return',
-  passport.authenticate('steam', { failureRedirect: '/login' }),
+  passport.authenticate('steam', { failureRedirect: '/start' }),
   function (req, res) {
   config.enableDev?res.redirect('http://localhost:3000/'):res.redirect('/');
   });
 
 router.get('/auth/logout', function(req, res){
   console.log('logout');
-  req.logout();
-  res.redirect('/');
+  req.logOut();
+  req.session.destroy();
+  res.clearCookie('skinsmaster');
+  res.redirect('/start');
 });
 
 router.get('/test', function (req, res) {
@@ -94,7 +96,7 @@ function ensureAuthenticated(req, res, next) {
 
   if (req.isAuthenticated()) { return next(); }
   res.send(req);
-  res.redirect('/');
+  res.redirect('/start');
 }
 
 module.exports = router;

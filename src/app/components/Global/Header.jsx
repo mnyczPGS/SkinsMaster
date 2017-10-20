@@ -21,10 +21,6 @@ export default class Menu extends Component {
 
   componentWillMount() {
     this.getUser();
-    let user = { "provider": "steam", "_json": { "steamid": "76561198145597332", "communityvisibilitystate": 3, "profilestate": 1, "personaname": "Kill-O-reN", "lastlogoff": 1508397776, "commentpermission": 1, "profileurl": "http://steamcommunity.com/id/FOX_The_Mister/", "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1.jpg", "avatarmedium": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_medium.jpg", "avatarfull": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_full.jpg", "personastate": 0, "primaryclanid": "103582791440727404", "timecreated": 1405758746, "personastateflags": 0 }, "id": "76561198145597332", "displayName": "Kill-O-reN", "photos": [{ "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1.jpg" }, { "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_medium.jpg" }, { "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_full.jpg" }], "identifier": "http://steamcommunity.com/openid/id/76561198145597332" };
-    console.log(user);
-    // this.setState({ user });
-    // this.setState({ loggedIn: true });
   }
 
   toggle() {
@@ -36,33 +32,39 @@ export default class Menu extends Component {
     window.open('/api/v1/user/auth/login', "_self")
   }
   getUser() {
-    fetch('/api/v1/user/auth/account', { method: "GET", credentials: 'include', mode: 'no-cors' })
+    fetch('/api/v1/user/auth/account', { method: "GET", credentials: 'include', timeout: 1000 })
       .then((data) => { return ('Account: ', data.json()) })
       .then((user) => {
-        console.log(user)
+        // console.log(user)
         this.setState({ user, loggedIn: true })
+      })
+      .catch(() => {
+        let user = { "provider": "steam", "_json": { "steamid": "76561198145597332", "communityvisibilitystate": 3, "profilestate": 1, "personaname": "Kill-O-reN", "lastlogoff": 1508397776, "commentpermission": 1, "profileurl": "http://steamcommunity.com/id/FOX_The_Mister/", "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1.jpg", "avatarmedium": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_medium.jpg", "avatarfull": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_full.jpg", "personastate": 0, "primaryclanid": "103582791440727404", "timecreated": 1405758746, "personastateflags": 0 }, "id": "76561198145597332", "displayName": "Kill-O-reN", "photos": [{ "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1.jpg" }, { "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_medium.jpg" }, { "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_full.jpg" }], "identifier": "http://steamcommunity.com/openid/id/76561198145597332" };
+        // console.log(user);
+        this.setState({ user });
+        this.setState({ loggedIn: true });
       })
   }
   logOut() {
-    let user ={}
+    let user = {}
     this.setState({ loggedIn: false })
     setTimeout(() => {
       console.log(this.state.loggedIn)
     }, 100);
-    // fetch('http://localhost:8000/api/v1/user/auth/logout')
+    fetch('/api/v1/user/auth/logout')
   }
   render() {
     return (
       <div className="Header">
         <Navbar color="faded" light toggleable>
-          <NavbarBrand href="/">SkinsMaster</NavbarBrand>
+        <Link to="/">SkinsMaster</Link>
 
           {
             this.state.loggedIn ?
               (
                 <Nav>
                   <NavItem >
-                    <img src={this.state.user.photos[2].value} alt={this.state.user.displayName}/>
+                    <img src={this.state.user.photos[2].value} alt={this.state.user.displayName} />
                   </NavItem>
                   <NavItem>
                     <Link className="nav-link" to='/'>Home</Link>

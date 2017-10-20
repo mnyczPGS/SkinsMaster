@@ -7,6 +7,8 @@ import { showAlert } from '../../../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Container, Row, Col } from 'reactstrap';
+import {userData} from '../../../api/user';
+import {getUserInventory, getItemPrice} from '../../../api/inventory';
 // import csgomarket from 'csgo-market';
 
 
@@ -23,7 +25,7 @@ class Home extends Component {
 
     this.getData = this.getData.bind(this);
     this.login = this.login.bind(this);
-    this.getUserGame = this.getUserGame.bind(this);
+    this.getInventory = this.getInventory.bind(this);
     this.getPrice = this.getPrice.bind(this);
   }
 
@@ -38,13 +40,8 @@ class Home extends Component {
   }
 
   getData(id) {
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    let fetchData = { headers: myHeaders, method: "GET" }
     let players = [];
-    fetch('/api/v1/steam/' + id, fetchData)
-      .then((data) => { return (data.json()) })
-      .then((data) => {
+    userData(id).then((data) => {
         players = this.state.players;
         players.push({
           avatar: data.response.players[0].avatarfull,
@@ -56,25 +53,15 @@ class Home extends Component {
       })
   }
 
-  getUserGame(id) {
-    let myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    let fetchData = { headers: myHeaders, method: "POST" }
-
-    fetchData.body = JSON.stringify({ 'id': `${id}` })
-    console.log(id);
-
-    fetch('/api/v1/user/inventory', fetchData)
-      .then((data) => { return (data.json()) })
+  getInventory(id) {
+    getUserInventory(id)
       .then((inventory) => {
-        console.log(inventory.descriptions);
         this.setState({ inventory: inventory.descriptions })
       })
   }
 
   getPrice(name) {
     let nam = name;
-    console.log(name, name.split('™').join('%E2%84%A2'))
     // console.log(name);
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -83,9 +70,9 @@ class Home extends Component {
     fetchData.body = JSON.stringify({ 'name': `${name.split('™').join('%E2%84%A2')}` })
     // console.log(name);
 
-    fetch('/api/v1/user/price', fetchData)
-      .then((data) => { return (data.json()) })
-      .then((inventory) => {
+    
+    getItemPrice(name)
+    .then((inventory) => {
         console.log('inv',inventory);
         // return inventory.lowest_price;
       })
@@ -98,10 +85,6 @@ class Home extends Component {
         <Button className="button is-primary"
           onClick={(e) => { e.preventDefault(); this.props.dispatch(showAlert('This alert can be changed from other component :D')); }}>
           Show alert
-        </Button>
-        <Button className="button is-primary"
-          onClick={this.getUserGame}>
-          Check
         </Button>
         <img src="http://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbaqKAxf0uL3djFN79fnzL-Nm_b5NqjulGdE7fp5j-jX7MKn2VW3-UE_Yz-gJo-ScQBrYA3V81m6xru-hsTpuMiYwXNn7yIl7CrcgVXp1p__7duw" alt="" />
 
@@ -136,7 +119,7 @@ class Home extends Component {
                     <td><img src={player.avatar} alt={player.nick} /></td>
                     <td>{player.nick}</td>
                     <td><a href={player.url}>Profile</a><br /></td>
-                    <td onClick={() => { this.getUserGame(player.id) }}>{player.id}</td>
+                    <td onClick={() => { this.getInventory(player.id) }}>{player.id}</td>
                   </tr>
                 )
               })

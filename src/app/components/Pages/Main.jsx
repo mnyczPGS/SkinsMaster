@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router';
 import Home from './Home/Home.jsx';
 import Contact from './Contact/Contact.jsx';
 import Test from './Test/Test.jsx';
+import Start from './Start';
 
 export default class Main extends Component {
   render() {
@@ -12,6 +13,7 @@ export default class Main extends Component {
           <Route exact path='/' component={Home} />
           <Route path='/contact' component={Contact} />
           <Route path='/test' component={Test} />
+          <Route path='/start' component={Start} />
         </Switch>
       </main>
     );
