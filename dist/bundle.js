@@ -38221,6 +38221,10 @@ var _Roulette = __webpack_require__(316);
 
 var _Roulette2 = _interopRequireDefault(_Roulette);
 
+var _Inventory = __webpack_require__(322);
+
+var _Inventory2 = _interopRequireDefault(_Inventory);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38251,7 +38255,8 @@ var Main = function (_Component) {
           _react2.default.createElement(_reactRouter.Route, { path: '/contact', component: _Contact2.default }),
           _react2.default.createElement(_reactRouter.Route, { path: '/test', component: _Test2.default }),
           _react2.default.createElement(_reactRouter.Route, { path: '/start', component: _Start2.default }),
-          _react2.default.createElement(_reactRouter.Route, { path: '/roulette', component: _Roulette2.default })
+          _react2.default.createElement(_reactRouter.Route, { path: '/roulette', component: _Roulette2.default }),
+          _react2.default.createElement(_reactRouter.Route, { path: '/inventory', component: _Inventory2.default })
         )
       );
     }
@@ -38642,8 +38647,16 @@ module.exports = Object.freeze({
   id: '76561198145597332',
   key: '8EA076358F99E86424EC22B64ADE01C3',
   enableDev: false,
-  // url: 'http://localhost:8000/',
-  url: 'https://skinsmaster.herokuapp.com/'
+  url: 'http://localhost:8000/',
+  // url: 'https://skinsmaster.herokuapp.com/',
+  firebaseConfig: {
+    apiKey: "AIzaSyD6SvuRyboN9mR1RZ3jz2CdtsgYXmZRMHE",
+    authDomain: "skinsmaster-7c8eb.firebaseapp.com",
+    databaseURL: "https://skinsmaster-7c8eb.firebaseio.com",
+    projectId: "skinsmaster-7c8eb",
+    storageBucket: "skinsmaster-7c8eb.appspot.com",
+    messagingSenderId: "965854556510"
+  }
 });
 
 /***/ }),
@@ -38662,23 +38675,21 @@ exports.getItemPrice = getItemPrice;
 var _sendRequest = __webpack_require__(133);
 
 function getUserInventory(id) {
-  var url = 'api/v1/user/inventory';
+  var url = 'api/v1/inventory/inventory';
   var body = JSON.stringify({ id: id });
   var method = 'POST';
 
   var params = { url: url, method: method, body: body };
-  console.log('inv', params);
   return (0, _sendRequest.sendRequest)(params).then(function (data) {
     return data.json();
   });
 }
 
 function getItemPrice(tmpName) {
-  var url = 'api/v1/user/price';
+  var url = 'api/v1/inventory/price';
   var method = 'POST';
   var name = tmpName.split('™').join('%E2%84%A2');
   var body = JSON.stringify({ name: name });
-  console.log(body);
 
   var params = { url: url, method: method, body: body };
 
@@ -39437,6 +39448,209 @@ var alertReducer = function alertReducer() {
 };
 
 exports.default = alertReducer;
+
+/***/ }),
+/* 322 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(18);
+
+var _inventory = __webpack_require__(309);
+
+var _reactstrap = __webpack_require__(19);
+
+__webpack_require__(323);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Inventory = function (_Component) {
+  _inherits(Inventory, _Component);
+
+  function Inventory(props) {
+    _classCallCheck(this, Inventory);
+
+    var _this = _possibleConstructorReturn(this, (Inventory.__proto__ || Object.getPrototypeOf(Inventory)).call(this, props));
+
+    _this.state = {
+      inventory: [],
+      prices: [],
+      progress: 20
+    };
+
+    _this.getInventory = _this.getInventory.bind(_this);
+    _this.getPrice = _this.getPrice.bind(_this);
+    _this.getPrices = _this.getPrices.bind(_this);
+    return _this;
+  }
+
+  _createClass(Inventory, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.getInventory('76561198145597332');
+      this.setProgress;
+    }
+  }, {
+    key: 'setProgress',
+    value: function setProgress(row) {
+      var numberOfItems = this.state.inventory.length;
+      console.log(quantity / row * 100);
+    }
+  }, {
+    key: 'getInventory',
+    value: function getInventory(id) {
+      var _this2 = this;
+
+      (0, _inventory.getUserInventory)(id).then(function (inventory) {
+        console.log(inventory);
+        _this2.setState({ inventory: inventory.descriptions });
+      });
+    }
+  }, {
+    key: 'getPrices',
+    value: function getPrices() {
+      var _this3 = this;
+
+      this.state.inventory.forEach(function (item) {
+        setTimeout(function (item, index) {
+          console.log(item);
+          _this3.setProgress(index);
+        }, 4000);
+      });
+    }
+  }, {
+    key: 'getPrice',
+    value: function getPrice(name) {
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      var fetchData = { headers: myHeaders, method: "POST" };
+
+      fetchData.body = JSON.stringify({ 'name': '' + name.split('™').join('%E2%84%A2') });
+
+      (0, _inventory.getItemPrice)(name).then(function (inventory) {
+        console.log('inv', inventory);
+        // return inventory.lowest_price;
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this4 = this;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'Inventory' },
+        _react2.default.createElement(_reactstrap.Progress, { color: 'warning', value: this.state.progress }),
+        _react2.default.createElement(
+          _reactstrap.Row,
+          null,
+          this.state.inventory.map(function (item, index) {
+            if (item.tradable) return _react2.default.createElement(
+              _reactstrap.Col,
+              { xs: '2', key: index, style: { border: '2px solid #' + item.name_color, borderRadius: '20px', padding: '40px' } },
+              _react2.default.createElement('div', null),
+              _react2.default.createElement(
+                'div',
+                null,
+                item.market_name
+              ),
+              _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: item.instanceid },
+                  'Profile'
+                ),
+                _react2.default.createElement('br', null)
+              ),
+              _react2.default.createElement(
+                'div',
+                null,
+                'tradable ',
+                item.tradable ? 'true' : 'false'
+              ),
+              _react2.default.createElement(
+                'div',
+                { onClick: function onClick() {
+                    _this4.getPrice(item.market_hash_name);
+                  } },
+                'price'
+              )
+            );
+          })
+        )
+      );
+    }
+  }]);
+
+  return Inventory;
+}(_react.Component);
+
+exports.default = Inventory;
+
+/***/ }),
+/* 323 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(324);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(35)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/sass-loader/lib/loader.js!./style.scss", function() {
+			var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/sass-loader/lib/loader.js!./style.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 324 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(34)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".Inventory img {\n  max-width: 100px; }\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

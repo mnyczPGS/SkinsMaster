@@ -1,10 +1,11 @@
 var path = require('path');
 var router = require('express').Router();
-var config = require('../config');
+var config = require('../../config');
 var request = require('request');
 var cors = require('cors');
 
 var user = require('./API/user');
+var inventory = require('./API/inventory');
 
 // router.get('/userGame', function (req, res) {
 //   console.log('req',req.body)
@@ -20,10 +21,11 @@ var corsOptions = {
 }
 
 router.use('/user', cors(corsOptions), user);
+router.use('/inventory', cors(corsOptions), inventory);
 
 router.get('/steam/:steamid', function (req, res) {
   var id = req.params.steamid
-  console.log(id);
+  console.log('steam id',id);
   var url = `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.key}&steamids=${id}`;
   request.get(url, function (error, steamHttpResponse, steamHttpBody) {
     res.send(steamHttpBody);

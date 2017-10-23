@@ -5,6 +5,7 @@ import Contact from './Contact/Contact.jsx';
 import Test from './Test/Test.jsx';
 import Start from './Start';
 import Roulette from './Roulette';
+import Inventory from './Inventory';
 
 export default class Main extends Component {
   render() {
@@ -16,6 +17,7 @@ export default class Main extends Component {
           <Route path='/test' component={Test} />
           <Route path='/start' component={Start} />
           <Route path='/roulette' component={Roulette} />
+          <Route path='/inventory' component={Inventory} />
         </Switch>
       </main>
     );

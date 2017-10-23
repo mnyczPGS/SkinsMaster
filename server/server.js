@@ -6,13 +6,14 @@ var path = require('path')
   , bodyParser = require("body-parser")
   , passportSteam = require('passport-steam')
   , session = require('express-session')
-  , passport = require('passport');
+  , passport = require('passport')
+  , firebase = require('firebase');
 
 // IMPORT //
 var apiRoutes = require('./routes/api');
 var indexRoutes = require('./routes/index');
 var userRoutes = require('./routes/API/user');
-var config = require('./config');
+var config = require('./../config');
 
 
 // CREATE APP //
@@ -20,6 +21,8 @@ var app = express();
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// INITIALIZE FIREBASE //
+firebase.initializeApp(config.firebaseConfig);
 
 app.use(session({
   secret: 'qwertyuiop',

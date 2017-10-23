@@ -4,7 +4,8 @@ var path = require('path')
   , passport = require('passport')
   , request = require('request')
   , LocalStrategy = require('passport-local').Strategy
-  , SteamStrategy = require('./../../package/passport-steam').Strategy;
+  , SteamStrategy = require('./../../package/passport-steam').Strategy
+  , firebase = require('firebase');
 
 
   passport.serializeUser(function (user, done) {
@@ -74,8 +75,9 @@ router.get('/test', function (req, res) {
 router.post('/inventory', function (req, res) {
   console.log('req', req.body.id)
   var url = `http://steamcommunity.com/inventory/${req.body.id}/730/2?l=polish&count=5000`;
-
+  
   request.get(url, function (error, steamHttpResponse, steamHttpBody) {
+    
     res.send(steamHttpBody);
   });
 });
