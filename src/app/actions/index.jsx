@@ -20,3 +20,13 @@ export const hideAlert = () => ({
   type: actionType.HIDE_ALERT,
   hidden: true
 });
+
+export const setSteamId = (id) => ({
+  type: actionType.SET_STEAM_ID,
+  id
+});
+
+export const clearSteamId = () => ({
+  type: actionType.DELETE_STEAM_ID,
+  id: null
+});

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getUserInventory, getItemPrice, updateAllPrices } from '../../../api/inventory';
+import { getUserInventory, getItemPrice, updateAllPrices, getItemsData } from '../../../api/inventory';
 import { Container, Row, Col, Progress, Button } from 'reactstrap';
+import { connect } from 'react-redux';
 
 import './style.scss';
 
-export default class Inventory extends Component {
+class Inventory extends Component {
   constructor(props) {
     super(props);
 
@@ -21,72 +22,82 @@ export default class Inventory extends Component {
     this.setTradableItems = this.setTradableItems.bind(this);
     this.updateAllPrices = this.updateAllPrices.bind(this);
   }
-  
-    updateAllPrices(){
-      updateAllPrices(this.state.inventory);
-    }
 
-  componentWillMount() {
-    this.getInventory('76561198145597332');
+  updateAllPrices() {
+    updateAllPrices(this.state.inventory);
   }
 
-  setProgress(row,length){
+  componentWillMount() {
+    console.log('prps id',this.props.steamId);
+    this.getInventory(this.props.steamId.id);
+  }
+  componentDidMount(){
+
+  }
+
+  setProgress(row, length) {
     let numberOfItems = this.state.inventory.length;
-    this.setState({progress: row/length*100});
+    this.setState({ progress: row / length * 100 });
   }
 
   getInventory(id) {
     getUserInventory(id)
       .then((inventory) => {
         this.setTradableItems(inventory.descriptions)
-        // console.log(inventory)
       })
   }
 
-  setTradableItems(items=[]){
+  setTradableItems(items = []) {
+    let inventory1 = [];
     let inventory = [];
-    items.forEach((item, index)=>{
-      if(item.tradable === 1){
-        inventory.push(item);
+    items.forEach((item, index) => {
+      if (item.tradable === 1) {
+        inventory1.push(item);
       }
     })
-    this.setState({inventory})
-    this.getPrices(inventory);
+    getItemsData(inventory1)
+    .then((inventory)=>{
+    this.setState({ inventory })
+    });
+    // this.setState({ inventory:inventory1 })
+    // this.getPrices(inventory);
   }
 
   getPrices(inventory) {
-    let i =0;
+    let i = 0;
     let interval = setInterval(
-      ()=>{
-        if(i>inventory.length-1){
+      () => {
+        if (i > inventory.length - 1) {
           clearInterval(interval);
-        } else{
+        } else {
           // console.log(inventory[i].market_hash_name)
           // this.getPrice(inventory[i].market_hash_name)
         }
-        this.setProgress(i,inventory.length);
+        this.setProgress(i, inventory.length);
         i++;
       }
-    ,100)
+      , 100)
   }
 
   getPrice(name) {
+    console.log('Here?')
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     let fetchData = { headers: myHeaders, method: "POST" }
 
-    fetchData.body = JSON.stringify({ 'name': `${name.split('™').join('%E2%84%A2')}` })
+    fetchData.body = JSON.stringify({ 'name': name })
 
 
     getItemPrice(name)
       .then((inventory) => {
         console.log('inv', inventory);
-        // return inventory.lowest_price;
+        return inventory;
       })
   }
 
   render() {
     // return(<div><Progress color="warning" value={this.state.progress} /></div>)
+    console.log('test', this.state.inventory)
     return (
       <div className='Inventory'>
         <Progress color="warning" value={this.state.progress} />
@@ -94,18 +105,21 @@ export default class Inventory extends Component {
         <Row>
           {
             this.state.inventory.map((item, index) => {
-              if (item.tradable) return (
-                <Col xs="2" key={index} style={{ border: `2px solid #${item.name_color}`, borderRadius: '20px', padding: '40px' }}>
-                  {//<div><img src={'https://steamcommunity-a.akamaihd.net/economy/image/' + item.icon_url} alt={item.market_name} /></div>
-                  }
-                  <div></div>
-                  <div>{item.market_name}</div>
-                  {
+              if (item) return (
+                
+                <Col xs="12" key={index} style={{ border: `2px solid #${item.name_color}`, borderRadius: '20px', padding: '40px', display: 'inline-flex' }}>
+                  <div><img src={'https://steamcommunity-a.akamaihd.net/economy/image/' + item.icon_url} alt={item.market_name} /></div>
+                  <div>
+                    <div></div>
+                    <div>{item.name}</div>
+                    {
 
-                    // <div><a href={item.instanceid}>Profile</a><br /></div>
-                    // <div>tradable {item.tradable ? 'true' : 'false'}</div>
-                    // <div onClick={() => { this.getPrice(item.market_hash_name) }}>price</div>
-                  }
+                      // <div><a href={item.instanceid}>Profile</a><br /></div>
+                      // <div>tradable {item.tradable ? 'true' : 'false'}</div>
+                      <div>Price: {item.price}</div>
+                    }
+                  </div>
+
                 </Col>
               )
             })
@@ -115,3 +129,9 @@ export default class Inventory extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    steamId: state.steamIdReducer
+  };
+}
+export default connect(mapStateToProps)(Inventory);
