@@ -99,7 +99,7 @@ function buildModelAndSend(items){
   }, 3000)
 }
 
-async function sendPriceToFirebase(model){
+function sendPriceToFirebase(model){
   let ref = firebase.database().ref('items');
   let parsedName = model.market_hash_name.split('™').join('%E2%84%A2');
   var url = `http://steamcommunity.com/market/priceoverview/json/?key=8EA076358F99E86424EC22B64ADE01C3&appid=730&currency=3&market_hash_name=${parsedName}`;
