@@ -19,3 +19,13 @@ export function getItemPrice(tmpName) {
 
   return sendRequest(params).then((data) => { return (data.json()) })
 }
+
+export function updateAllPrices(items) {
+  const url = 'api/v1/inventory/update_prices';
+  const method = 'POST';
+  let body = JSON.stringify({items});
+
+  const params = {url,method,body};
+
+  return sendRequest(params).then((data) => { return (data.json()) })
+}

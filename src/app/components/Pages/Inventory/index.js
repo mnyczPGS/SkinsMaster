@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getUserInventory, getItemPrice } from '../../../api/inventory';
-import { Container, Row, Col, Progress } from 'reactstrap';
+import { getUserInventory, getItemPrice, updateAllPrices } from '../../../api/inventory';
+import { Container, Row, Col, Progress, Button } from 'reactstrap';
 
 import './style.scss';
 
@@ -19,7 +19,12 @@ export default class Inventory extends Component {
     this.getPrice = this.getPrice.bind(this);
     this.getPrices = this.getPrices.bind(this);
     this.setTradableItems = this.setTradableItems.bind(this);
+    this.updateAllPrices = this.updateAllPrices.bind(this);
   }
+  
+    updateAllPrices(){
+      updateAllPrices(this.state.inventory);
+    }
 
   componentWillMount() {
     this.getInventory('76561198145597332');
@@ -27,7 +32,6 @@ export default class Inventory extends Component {
 
   setProgress(row,length){
     let numberOfItems = this.state.inventory.length;
-    console.log('progress', length)
     this.setState({progress: row/length*100});
   }
 
@@ -46,34 +50,24 @@ export default class Inventory extends Component {
         inventory.push(item);
       }
     })
-    console.log(items)
-    console.log(inventory);
     this.setState({inventory})
     this.getPrices(inventory);
   }
 
   getPrices(inventory) {
-    console.log(inventory.length)
     let i =0;
     let interval = setInterval(
       ()=>{
         if(i>inventory.length-1){
           clearInterval(interval);
         } else{
-          console.log(inventory[i].market_hash_name)
-          this.getPrice(inventory[i].market_hash_name)
+          // console.log(inventory[i].market_hash_name)
+          // this.getPrice(inventory[i].market_hash_name)
         }
         this.setProgress(i,inventory.length);
         i++;
       }
-    ,4000)
-
-    // inventory.forEach((item) => {
-    //   setTimeout((item, index) => {
-    //     console.log(item);
-    //     this.setProgress(index);
-    //   }, 4000);
-    // })
+    ,100)
   }
 
   getPrice(name) {
@@ -96,6 +90,7 @@ export default class Inventory extends Component {
     return (
       <div className='Inventory'>
         <Progress color="warning" value={this.state.progress} />
+        <Button onClick={this.updateAllPrices}>Update prices</Button>
         <Row>
           {
             this.state.inventory.map((item, index) => {
@@ -105,9 +100,12 @@ export default class Inventory extends Component {
                   }
                   <div></div>
                   <div>{item.market_name}</div>
-                  <div><a href={item.instanceid}>Profile</a><br /></div>
-                  <div>tradable {item.tradable ? 'true' : 'false'}</div>
-                  <div onClick={() => { this.getPrice(item.market_hash_name) }}>price</div>
+                  {
+
+                    // <div><a href={item.instanceid}>Profile</a><br /></div>
+                    // <div>tradable {item.tradable ? 'true' : 'false'}</div>
+                    // <div onClick={() => { this.getPrice(item.market_hash_name) }}>price</div>
+                  }
                 </Col>
               )
             })
