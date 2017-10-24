@@ -17,9 +17,13 @@ module.exports = {
         drawn = Math.floor((Math.random(seed4) * 100) + 1);
       }
       rouletteNumber.set(drawn)
-      rouletteLastNumbers.push(drawn)
+      setTimeout(function() {
+        rouletteLastNumbers.push(drawn)
+      }, 10000);
       console.log(drawn)
     },60000);
+    
+    
     let lastNums = null;
     let ot = firebase.database().ref('rouletteLast');
     ot.limitToLast(10).on('value', function (snapshot) {
