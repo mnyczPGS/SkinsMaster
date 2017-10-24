@@ -56426,7 +56426,7 @@ var Home = function (_Component) {
 
       setTimeout(function () {
         document.getElementById('numbers').style.transition = '0s';
-        _this3.rememberLastNumbers(drawn);
+        // this.rememberLastNumbers(drawn);
         _this3.setState({ number: number, color: _this3.checkColor(drawn) });
       }, 10000);
     }

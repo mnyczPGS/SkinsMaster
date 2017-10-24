@@ -114,7 +114,7 @@ export default class Home extends Component {
 
     setTimeout(() => {
       document.getElementById('numbers').style.transition = '0s';
-      this.rememberLastNumbers(drawn);
+      // this.rememberLastNumbers(drawn);
       this.setState({ number, color: this.checkColor(drawn) })
     }, 10000);
   }
