@@ -39,6 +39,8 @@ export default class Home extends Component {
       this.randomize(snap.val());
       console.log(snap.val());
     })
+
+    let rouletteLast = firebase.database().ref('rouletteLast');
   }
 
   generateSeries(drawn = -1) {

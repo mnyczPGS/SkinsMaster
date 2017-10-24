@@ -56424,6 +56424,8 @@ var Home = function (_Component) {
         _this2.randomize(snap.val());
         console.log(snap.val());
       });
+
+      var rouletteLast = _firebase2.default.database().ref('rouletteLast');
     }
   }, {
     key: 'generateSeries',
