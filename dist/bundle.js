@@ -34257,7 +34257,7 @@ exports = module.exports = __webpack_require__(42)(undefined);
 
 
 // module
-exports.push([module.i, "body .Header {\n  height: 80px; }\n  body .Header .top-avatar {\n    width: 40px; }\n  body .Header .navbar {\n    background-color: lightgray; }\n    body .Header .navbar .nav-link {\n      line-height: 45px;\n      margin-left: 10px;\n      cursor: pointer; }\n      body .Header .navbar .nav-link img {\n        height: 45px; }\n\nbody .Content {\n  background-color: #2b2b2b;\n  color: white;\n  min-height: 100vh;\n  margin-top: -80px;\n  padding-top: 80px; }\n\nbody .Footer {\n  height: 100px;\n  background-color: #f7f7f7;\n  margin-top: -100px; }\n\nbody .alert {\n  position: absolute;\n  right: 0;\n  z-index: 99; }\n\nbody .navMobile {\n  display: none; }\n\nbody .navDesktop {\n  display: flex; }\n\n@media (max-width: 1000px) {\n  body .navMobile {\n    display: flex; }\n  body .navDesktop {\n    display: none; } }\n", ""]);
+exports.push([module.i, "body .Header {\n  height: 80px; }\n  body .Header .top-avatar {\n    width: 40px; }\n  body .Header .navbar {\n    background-color: lightgray; }\n    body .Header .navbar .nav-link {\n      line-height: 45px;\n      margin-left: 10px;\n      cursor: pointer; }\n      body .Header .navbar .nav-link img {\n        height: 45px; }\n\nbody .Content {\n  background-color: #2b2b2b;\n  color: white;\n  min-height: 100vh;\n  margin-top: -80px;\n  padding-top: 80px;\n  padding-bottom: 100px; }\n\nbody .Footer {\n  height: 100px;\n  background-color: #f7f7f7;\n  margin-top: -100px; }\n\nbody .alert {\n  position: absolute;\n  right: 0;\n  z-index: 99; }\n\nbody .navMobile {\n  display: none; }\n\nbody .navDesktop {\n  display: flex; }\n\n@media (max-width: 100px) {\n  body .navMobile {\n    display: flex; }\n  body .navDesktop {\n    display: none; } }\n", ""]);
 
 // exports
 
@@ -55228,82 +55228,6 @@ var Menu = function (_Component) {
         { className: 'Header' },
         _react2.default.createElement(
           _reactstrap.Navbar,
-          { color: 'faded', light: true, className: 'navMobile', toggleable: true },
-          _react2.default.createElement(
-            _reactRouterDom.Link,
-            { to: '/' },
-            'SkinsMasters'
-          ),
-          _react2.default.createElement(_reactstrap.NavbarToggler, { onClick: this.toggleNavbar, className: 'mr-2' }),
-          _react2.default.createElement(
-            _reactstrap.Collapse,
-            { isOpen: !this.state.collapsed, navbar: true },
-            this.state.loggedIn ? _react2.default.createElement(
-              _reactstrap.Nav,
-              { className: 'ml-auto', navbar: true },
-              _react2.default.createElement(
-                _reactstrap.NavItem,
-                null,
-                _react2.default.createElement('img', { src: this.state.user.photos[1].value, alt: this.state.user.displayName })
-              ),
-              _react2.default.createElement(
-                _reactstrap.NavItem,
-                null,
-                _react2.default.createElement(
-                  _reactRouterDom.Link,
-                  { className: 'nav-link', to: '/' },
-                  'Home'
-                )
-              ),
-              _react2.default.createElement(
-                _reactstrap.NavItem,
-                null,
-                _react2.default.createElement(
-                  _reactRouterDom.Link,
-                  { className: 'nav-link', to: '/contact' },
-                  'Contact'
-                )
-              ),
-              _react2.default.createElement(
-                _reactstrap.NavItem,
-                null,
-                _react2.default.createElement(
-                  _reactRouterDom.Link,
-                  { className: 'nav-link', to: '/test' },
-                  'counter'
-                )
-              ),
-              _react2.default.createElement(
-                _reactstrap.NavItem,
-                null,
-                _react2.default.createElement(
-                  _reactstrap.Button,
-                  { onClick: this.getUser },
-                  'Get user'
-                )
-              ),
-              _react2.default.createElement(
-                _reactstrap.NavItem,
-                null,
-                _react2.default.createElement(
-                  _reactstrap.Button,
-                  { onClick: this.logOut },
-                  'Log out'
-                )
-              )
-            ) : _react2.default.createElement(
-              _reactstrap.Nav,
-              { className: 'ml-auto', navbar: true },
-              _react2.default.createElement(
-                _reactstrap.NavItem,
-                null,
-                _react2.default.createElement('img', { onClick: this.logIn, style: { width: 'auto' }, src: 'https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_01.png', alt: 'sign in through steam' })
-              )
-            )
-          )
-        ),
-        _react2.default.createElement(
-          _reactstrap.Navbar,
           { light: true, className: 'navDesktop  navbar-dark bg-dark' },
           _react2.default.createElement(
             _reactRouterDom.Link,
@@ -55330,8 +55254,8 @@ var Menu = function (_Component) {
                 null,
                 _react2.default.createElement(
                   _reactRouterDom.Link,
-                  { className: 'nav-link', to: '/inventory' },
-                  'Inventory'
+                  { className: 'nav-link', to: '/coinflip' },
+                  'Coinflip'
                 )
               ),
               _react2.default.createElement(
@@ -55353,24 +55277,22 @@ var Menu = function (_Component) {
                     { className: 'asd' },
                     _react2.default.createElement(
                       _reactstrap.DropdownItem,
-                      { header: true },
-                      'Header'
-                    ),
-                    _react2.default.createElement(
-                      _reactstrap.DropdownItem,
-                      { disabled: true },
-                      'Action'
-                    ),
-                    _react2.default.createElement(
-                      _reactstrap.DropdownItem,
                       null,
-                      'Another Action'
+                      _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/inventory' },
+                        'Inventory'
+                      )
                     ),
                     _react2.default.createElement(_reactstrap.DropdownItem, { divider: true }),
                     _react2.default.createElement(
                       _reactstrap.DropdownItem,
                       null,
-                      'Another Action'
+                      _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/config' },
+                        'Config'
+                      )
                     )
                   )
                 )
@@ -56382,7 +56304,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var roulette = {
-  numbers: [32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 0, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26]
+  // numbers: [32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26, 0]
+  // numbers:    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]
+  numbers: [5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26, 0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10]
+
 };
 
 var Home = function (_Component) {
@@ -56426,6 +56351,13 @@ var Home = function (_Component) {
       });
 
       var rouletteLast = _firebase2.default.database().ref('rouletteLast');
+      rouletteLast.on('value', function (snap) {
+        var lastNumbers = [];
+        snap.forEach(function (item) {
+          lastNumbers.push(item.val());
+        });
+        _this2.setState({ lastNumbers: lastNumbers });
+      });
     }
   }, {
     key: 'generateSeries',
@@ -56433,15 +56365,19 @@ var Home = function (_Component) {
       var drawn = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -1;
 
       var otherNumbers = [];
-      for (var i = 0; i < 145; i++) {
-        if (i < 36) {
+      for (var i = 0; i < 222; i++) {
+        if (i <= 36) {
           otherNumbers.push(i);
-        } else if (i >= 36 && i < 73) {
-          otherNumbers.push(i - 36);
-        } else if (i >= 73 && i < 109) {
-          otherNumbers.push(i - 73);
-        } else if (i >= 109) {
-          otherNumbers.push(i - 109);
+        } else if (i > 36 && i <= 73) {
+          otherNumbers.push(i - 37);
+        } else if (i > 73 && i <= 110) {
+          otherNumbers.push(i - 74);
+        } else if (i > 110 && i <= 147) {
+          otherNumbers.push(i - 111);
+        } else if (i > 147 && i <= 184) {
+          otherNumbers.push(i - 148);
+        } else {
+          otherNumbers.push(i - 185);
         }
       }
       console.log(otherNumbers);
@@ -56458,8 +56394,8 @@ var Home = function (_Component) {
       var seed4 = Math.random(seed);
       while (drawn < 0 || drawn > 36) {
         drawn = Math.floor(Math.random(seed4) * 100 + 1);
+        console.log('test', drawn);
       }
-      console.log('drawn', drawn);
       return drawn;
     }
   }, {
@@ -56469,8 +56405,8 @@ var Home = function (_Component) {
 
       var number = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -1;
 
-      console.log('GO!');
-      document.getElementById('numbers').style.left = '0';
+      console.log('GO!', number);
+      document.getElementById('numbers').style.left = '0vw';
 
       var drawn = -1;
       if (number == -1) {
@@ -56484,15 +56420,15 @@ var Home = function (_Component) {
       setTimeout(function () {
         var ran = Math.random() * 10 / 2;
         console.log('rand', ran / 5 * 100);
-        document.getElementById('numbers').style.transition = 'all 5s ease-out';
-        document.getElementById('numbers').style.left = -(68 * 5 + drawn * 5 + ran) + 'vw';
+        document.getElementById('numbers').style.transition = 'all 10s ease-out';
+        document.getElementById('numbers').style.left = -(143 * 5 + drawn * 5 + ran) + 'vw';
       }, 10);
 
       setTimeout(function () {
         document.getElementById('numbers').style.transition = '0s';
         _this3.rememberLastNumbers(drawn);
         _this3.setState({ number: number, color: _this3.checkColor(drawn) });
-      }, 5000);
+      }, 10000);
     }
   }, {
     key: 'rememberLastNumbers',
@@ -56508,8 +56444,14 @@ var Home = function (_Component) {
   }, {
     key: 'checkColor',
     value: function checkColor(drawn) {
-      if (drawn == 14) {
+      if (drawn == 18) {
         return 'green';
+      }if (drawn < 18) {
+        if (drawn % 2 == 0) {
+          return 'red';
+        } else {
+          return 'black';
+        }
       } else {
         if (drawn % 2 == 0) {
           return 'black';
@@ -72361,7 +72303,7 @@ exports = module.exports = __webpack_require__(42)(undefined);
 
 
 // module
-exports.push([module.i, ".Roulette .lastDrawned {\n  width: 100%;\n  height: 200px;\n  display: flex;\n  justify-content: center; }\n  .Roulette .lastDrawned .lastNumbers {\n    width: 50%;\n    justify-content: center;\n    align-items: center; }\n    .Roulette .lastDrawned .lastNumbers .lastNumber {\n      display: flex;\n      width: 10%;\n      height: 55px;\n      justify-content: center;\n      align-items: center; }\n\n.Roulette .drawn {\n  overflow: hidden;\n  width: 50vw;\n  margin: 0 auto;\n  border-left: 1px solid black;\n  border-right: 1px solid black; }\n  .Roulette .drawn .numbers {\n    height: 50px;\n    width: 725vw;\n    position: relative;\n    left: 0; }\n    .Roulette .drawn .numbers .number {\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      width: 5vw; }\n  .Roulette .drawn .duringDrawn {\n    left: -445vw; }\n  .Roulette .drawn .divider {\n    width: 2px;\n    height: 60px;\n    position: absolute;\n    background-color: red;\n    left: 50vw;\n    margin-top: -5px; }\n", ""]);
+exports.push([module.i, ".Roulette .lastDrawned {\n  width: 100%;\n  height: 200px;\n  display: flex;\n  justify-content: center; }\n  .Roulette .lastDrawned .lastNumbers {\n    width: 50%;\n    justify-content: center;\n    align-items: center; }\n    .Roulette .lastDrawned .lastNumbers .lastNumber {\n      display: flex;\n      width: 10%;\n      height: 55px;\n      justify-content: center;\n      align-items: center; }\n\n.Roulette .drawn {\n  overflow: hidden;\n  width: 50vw;\n  margin: 0 auto;\n  border-left: 1px solid black;\n  border-right: 1px solid black; }\n  .Roulette .drawn .numbers {\n    height: 50px;\n    width: 1110vw;\n    position: relative;\n    left: 0; }\n    .Roulette .drawn .numbers .number {\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      width: 5vw; }\n  .Roulette .drawn .duringDrawn {\n    left: -445vw; }\n  .Roulette .drawn .divider {\n    width: 2px;\n    height: 60px;\n    position: absolute;\n    background-color: red;\n    left: 50vw;\n    margin-top: -5px; }\n", ""]);
 
 // exports
 

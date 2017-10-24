@@ -36,13 +36,13 @@ class Menu extends Component {
   }
   toggle() {
     let dropdownOpen = !this.state.dropdownOpen;
-    if(dropdownOpen){
-      document.getElementsByClassName('dropdown-menu')[0].style.display='block'
-      document.getElementsByClassName('dropdown-menu')[0].style.position='absolute'
+    if (dropdownOpen) {
+      document.getElementsByClassName('dropdown-menu')[0].style.display = 'block'
+      document.getElementsByClassName('dropdown-menu')[0].style.position = 'absolute'
     } else {
-      document.getElementsByClassName('dropdown-menu')[0].style.display='none'
+      document.getElementsByClassName('dropdown-menu')[0].style.display = 'none'
     }
-    this.setState({dropdownOpen});
+    this.setState({ dropdownOpen });
   }
   logIn() {
     window.open('/api/v1/user/auth/login', "_self")
@@ -77,44 +77,6 @@ class Menu extends Component {
   render() {
     return (
       <div className="Header">
-        <Navbar color="faded" light className="navMobile" toggleable>
-          <Link to="/">SkinsMasters</Link>
-          <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-          <Collapse isOpen={!this.state.collapsed} navbar>
-            {
-              this.state.loggedIn ?
-                (
-                  <Nav className="ml-auto" navbar>
-                    <NavItem >
-                      <img src={this.state.user.photos[1].value} alt={this.state.user.displayName} />
-                    </NavItem>
-                    <NavItem>
-                      <Link className="nav-link" to='/'>Home</Link>
-                    </NavItem>
-                    <NavItem>
-                      <Link className="nav-link" to='/contact'>Contact</Link>
-                    </NavItem>
-                    <NavItem>
-                      <Link className="nav-link" to='/test'>counter</Link>
-                    </NavItem>
-                    <NavItem>
-                      <Button onClick={this.getUser} >Get user</Button>
-                    </NavItem>
-                    <NavItem>
-                      <Button onClick={this.logOut} >Log out</Button>
-                    </NavItem>
-                  </Nav>)
-                :
-                (
-                  <Nav className="ml-auto" navbar>
-                    <NavItem>
-                      <img onClick={this.logIn} style={{ width: 'auto' }} src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_01.png" alt="sign in through steam" />
-                    </NavItem>
-                  </Nav>
-                )
-            }
-          </Collapse>
-        </Navbar>
         <Navbar light className="navDesktop  navbar-dark bg-dark">
           <Link className="nav-link" to="/">SkinsMasters</Link>
           <Nav className="ml-auto" navbar>
@@ -126,20 +88,21 @@ class Menu extends Component {
                       <Link className="nav-link" to='/roulette'>Roulette</Link>
                     </NavItem>
                     <NavItem>
-                      <Link className="nav-link" to='/inventory'>Inventory</Link>
+                      <Link className="nav-link" to='/coinflip'>Coinflip</Link>
                     </NavItem>
                     <NavItem >
-
-                      <NavDropdown isOpen={this.state.dropdownOpen} size="sm"toggle={this.toggle}>
+                      <NavDropdown isOpen={this.state.dropdownOpen} size="sm" toggle={this.toggle}>
                         <DropdownToggle caret>
                           Hello {this.state.user.displayName} !<img className="top-avatar" src={this.state.user.photos[1].value} alt={this.state.user.displayName} />
                         </DropdownToggle>
                         <DropdownMenu className="asd">
-                          <DropdownItem header>Header</DropdownItem>
-                          <DropdownItem disabled>Action</DropdownItem>
-                          <DropdownItem>Another Action</DropdownItem>
+                          <DropdownItem>
+                            <Link to='/inventory'>Inventory</Link>
+                          </DropdownItem>
                           <DropdownItem divider />
-                          <DropdownItem>Another Action</DropdownItem>
+                          <DropdownItem>
+                            <Link to='/config'>Config</Link>
+                          </DropdownItem>
                         </DropdownMenu>
                       </NavDropdown>
                     </NavItem>

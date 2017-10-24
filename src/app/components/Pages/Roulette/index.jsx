@@ -6,7 +6,10 @@ import firebase from 'firebase';
 import './style.scss'
 
 const roulette = {
-  numbers: [32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 0, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26]
+  // numbers: [32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26, 0]
+  // numbers:    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]
+  numbers: [5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26, 0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10]
+  
 }
 
 export default class Home extends Component {
@@ -20,7 +23,7 @@ export default class Home extends Component {
       otherNumbers: [],
       lastOtherNumbers: []
     }
-    
+
 
     this.randomize = this.randomize.bind(this);
     this.rememberLastNumbers = this.rememberLastNumbers.bind(this);
@@ -32,28 +35,39 @@ export default class Home extends Component {
     this.generateSeries();
   }
 
-  componentDidMount(){
+  componentDidMount() {
     let rouletteNumbers = firebase.database().ref('roulette');
-    rouletteNumbers.on('value', snap=>{
+    rouletteNumbers.on('value', snap => {
       // this.setState({})
       this.randomize(snap.val());
       console.log(snap.val());
     })
 
     let rouletteLast = firebase.database().ref('rouletteLast');
+    rouletteLast.on('value', snap => {
+      let lastNumbers = []
+      snap.forEach((item) =>{
+        lastNumbers.push(item.val())
+      });
+      this.setState({ lastNumbers })
+    })
   }
 
   generateSeries(drawn = -1) {
     let otherNumbers = [];
-    for (let i = 0; i < 145; i++) {
-      if (i < 36) {
+    for (let i = 0; i < 222; i++) {
+      if (i <= 36) {
         otherNumbers.push(i);
-      } else if (i >= 36 && i < 73) {
-        otherNumbers.push(i - 36);
-      } else if (i >= 73 && i < 109) {
-        otherNumbers.push(i - 73);
-      } else if(i >= 109){
-        otherNumbers.push(i - 109);
+      } else if (i > 36 && i <= 73) {
+        otherNumbers.push(i - 37);
+      } else if (i > 73 && i <= 110) {
+        otherNumbers.push(i - 74);
+      } else if (i > 110 && i <= 147) {
+        otherNumbers.push(i - 111);
+      } else if(i>147 && i <= 184) {
+        otherNumbers.push(i - 148);
+      } else {
+        otherNumbers.push(i - 185);
       }
     }
     console.log(otherNumbers)
@@ -69,29 +83,29 @@ export default class Home extends Component {
     var seed4 = Math.random(seed);
     while (drawn < 0 || drawn > 36) {
       drawn = Math.floor((Math.random(seed4) * 100) + 1);
+    console.log('test', drawn)
     }
-    console.log('drawn',drawn)
     return drawn;
   }
 
-  randomize(number=-1) {
-    console.log('GO!')
-    document.getElementById('numbers').style.left = '0';
+  randomize(number = -1) {
+    console.log('GO!',number)
+    document.getElementById('numbers').style.left = '0vw';
 
     var drawn = -1;
-    if(number==-1){
+    if (number == -1) {
       drawn = this.generateDrawn();
     } else {
       drawn = number
     }
     this.generateSeries(drawn);
     console.log(drawn);
-    
+
     setTimeout(() => {
-      let ran = ((Math.random()*10)/2);
-      console.log('rand',ran/5*100)
-      document.getElementById('numbers').style.transition = 'all 5s ease-out';
-      document.getElementById('numbers').style.left = -((68*5)+(drawn*5)+(ran))+'vw';
+      let ran = ((Math.random() * 10) / 2);
+      console.log('rand', ran / 5 * 100)
+      document.getElementById('numbers').style.transition = 'all 10s ease-out';
+      document.getElementById('numbers').style.left = -((143 * 5) + (drawn * 5) + (ran)) + 'vw';
 
     }, 10);
 
@@ -102,7 +116,7 @@ export default class Home extends Component {
       document.getElementById('numbers').style.transition = '0s';
       this.rememberLastNumbers(drawn);
       this.setState({ number, color: this.checkColor(drawn) })
-    }, 5000);
+    }, 10000);
   }
 
   rememberLastNumbers(drawn) {
@@ -116,8 +130,14 @@ export default class Home extends Component {
   }
 
   checkColor(drawn) {
-    if (drawn == 14) {
+    if (drawn == 18) {
       return ('green')
+    } if(drawn<18){
+      if (drawn % 2 == 0) {
+        return ('red')
+      } else {
+        return ('black')
+      }
     } else {
       if (drawn % 2 == 0) {
         return ('black')
@@ -152,7 +172,7 @@ export default class Home extends Component {
         </div>
 
         <br />
-        <Button onClick={()=>{this.randomize(-1)}}>Losuj liczbę</Button>
+        <Button onClick={() => { this.randomize(-1) }}>Losuj liczbę</Button>
         <br />
         Welcome to SkinsMasters! Number <div style={{ color: this.state.color }}>{roulette.numbers[this.state.number]}</div>
       </div>
