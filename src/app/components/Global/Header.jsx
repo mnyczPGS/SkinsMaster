@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Button } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavDropdown, NavbarBrand, Nav, NavItem, NavLink, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setSteamId, clearSteamId } from '../../actions';
@@ -18,8 +18,10 @@ class Menu extends Component {
     this.logOut = this.logOut.bind(this);
     this.getUser = this.getUser.bind(this);
     this.toggleNavbar = this.toggleNavbar.bind(this);
+    this.toggle = this.toggle.bind(this);
     this.state = {
-      collapsed: true
+      collapsed: true,
+      dropdownOpen: false
     };
   }
 
@@ -31,6 +33,16 @@ class Menu extends Component {
     this.setState({
       collapsed: !this.state.collapsed
     });
+  }
+  toggle() {
+    let dropdownOpen = !this.state.dropdownOpen;
+    if(dropdownOpen){
+      document.getElementsByClassName('dropdown-menu')[0].style.display='block'
+      document.getElementsByClassName('dropdown-menu')[0].style.position='absolute'
+    } else {
+      document.getElementsByClassName('dropdown-menu')[0].style.display='none'
+    }
+    this.setState({dropdownOpen});
   }
   logIn() {
     window.open('/api/v1/user/auth/login', "_self")
@@ -45,13 +57,13 @@ class Menu extends Component {
       })
       .catch(() => {
         let user = { "provider": "steam", "_json": { "steamid": "76561198145597332", "communityvisibilitystate": 3, "profilestate": 1, "personaname": "Kill-O-reN", "lastlogoff": 1508397776, "commentpermission": 1, "profileurl": "http://steamcommunity.com/id/FOX_The_Mister/", "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1.jpg", "avatarmedium": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_medium.jpg", "avatarfull": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_full.jpg", "personastate": 0, "primaryclanid": "103582791440727404", "timecreated": 1405758746, "personastateflags": 0 }, "id": "76561198145597332", "displayName": "Kill-O-reN", "photos": [{ "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1.jpg" }, { "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_medium.jpg" }, { "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_full.jpg" }], "identifier": "http://steamcommunity.com/openid/id/76561198145597332" };
-        
+
         this.props.dispatch(setSteamId(user.id));
         this.setState({ user });
         this.setState({ loggedIn: true });
       })
     setTimeout(() => {
-      console.log('Header',this.state.user)
+      console.log('Header', this.state.user)
     }, 100);
   }
   logOut() {
@@ -117,10 +129,22 @@ class Menu extends Component {
                       <Link className="nav-link" to='/inventory'>Inventory</Link>
                     </NavItem>
                     <NavItem >
-                      <Link className="nav-link" to='/roulette'>Hello {this.state.user.displayName} !<img src={this.state.user.photos[1].value} alt={this.state.user.displayName} /></Link>
+
+                      <NavDropdown isOpen={this.state.dropdownOpen} size="sm"toggle={this.toggle}>
+                        <DropdownToggle caret>
+                          Hello {this.state.user.displayName} !<img className="top-avatar" src={this.state.user.photos[1].value} alt={this.state.user.displayName} />
+                        </DropdownToggle>
+                        <DropdownMenu className="asd">
+                          <DropdownItem header>Header</DropdownItem>
+                          <DropdownItem disabled>Action</DropdownItem>
+                          <DropdownItem>Another Action</DropdownItem>
+                          <DropdownItem divider />
+                          <DropdownItem>Another Action</DropdownItem>
+                        </DropdownMenu>
+                      </NavDropdown>
                     </NavItem>
                     {
-                      
+
                       // <NavItem>
                       //   <Link className="nav-link" to='/contact'>Contact</Link>
                       // </NavItem>
@@ -190,6 +214,6 @@ class Menu extends Component {
   }
 }
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(setSteamId,clearSteamId, dispatch) }
+  return { actions: bindActionCreators(setSteamId, clearSteamId, dispatch) }
 }
 export default connect(mapDispatchToProps)(Menu);

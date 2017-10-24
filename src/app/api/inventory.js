@@ -23,10 +23,11 @@ export function getItemPrice(name) {
 
 export function getItemsData(items) {
   console.log(items);
+
   const url = 'api/v1/inventory/item_data';
   const method = 'POST';
   let body = JSON.stringify({items});
-
+  console.log(body)
   const params = {url,method,body};
 
   return sendRequest(params).then((data) => { return (data.json()) })

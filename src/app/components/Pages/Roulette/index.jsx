@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
+import firebase from 'firebase';
 
 import './style.scss'
 
 const roulette = {
-  numbers: [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26]
+  numbers: [32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 0, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26]
 }
 
 export default class Home extends Component {
@@ -19,6 +20,7 @@ export default class Home extends Component {
       otherNumbers: [],
       lastOtherNumbers: []
     }
+    
 
     this.randomize = this.randomize.bind(this);
     this.rememberLastNumbers = this.rememberLastNumbers.bind(this);
@@ -30,23 +32,35 @@ export default class Home extends Component {
     this.generateSeries();
   }
 
+  componentDidMount(){
+    let rouletteNumbers = firebase.database().ref('roulette');
+    rouletteNumbers.on('value', snap=>{
+      // this.setState({})
+      this.randomize(snap.val());
+      console.log(snap.val());
+    })
+  }
+
   generateSeries(drawn = -1) {
     let otherNumbers = [];
-    for (let i = 0; i < 119; i++) {
+    for (let i = 0; i < 145; i++) {
       if (i < 36) {
         otherNumbers.push(i);
       } else if (i >= 36 && i < 73) {
         otherNumbers.push(i - 36);
-      } else if (i >= 73) {
+      } else if (i >= 73 && i < 109) {
         otherNumbers.push(i - 73);
+      } else if(i >= 109){
+        otherNumbers.push(i - 109);
       }
     }
+    console.log(otherNumbers)
     this.setState({ otherNumbers });
   }
 
   generateDrawn() {
     var drawn = -1;
-    var seed = Math.floor(Math.random(new Date()) * 1000000000);
+    var seed = Math.floor(Math.random(new Date()) * 1000000);
     // var a = seed.toString();
     // var seed2 = Math.random(seed);
     // var seed3 = Math.random(seed2);
@@ -54,22 +68,27 @@ export default class Home extends Component {
     while (drawn < 0 || drawn > 36) {
       drawn = Math.floor((Math.random(seed4) * 100) + 1);
     }
+    console.log('drawn',drawn)
     return drawn;
   }
 
-  randomize() {
+  randomize(number=-1) {
+    console.log('GO!')
     document.getElementById('numbers').style.left = '0';
 
-
-    var drawn = this.generateDrawn();
-    const number = drawn;
+    var drawn = -1;
+    if(number==-1){
+      drawn = this.generateDrawn();
+    } else {
+      drawn = number
+    }
     this.generateSeries(drawn);
     console.log(drawn);
     
     setTimeout(() => {
       let ran = ((Math.random()*10)/2);
       console.log('rand',ran/5*100)
-      document.getElementById('numbers').style.transition = 'all 10s ease-out';
+      document.getElementById('numbers').style.transition = 'all 5s ease-out';
       document.getElementById('numbers').style.left = -((68*5)+(drawn*5)+(ran))+'vw';
 
     }, 10);
@@ -81,7 +100,7 @@ export default class Home extends Component {
       document.getElementById('numbers').style.transition = '0s';
       this.rememberLastNumbers(drawn);
       this.setState({ number, color: this.checkColor(drawn) })
-    }, 10000);
+    }, 5000);
   }
 
   rememberLastNumbers(drawn) {
@@ -95,7 +114,7 @@ export default class Home extends Component {
   }
 
   checkColor(drawn) {
-    if (drawn == 0) {
+    if (drawn == 14) {
       return ('green')
     } else {
       if (drawn % 2 == 0) {
@@ -131,7 +150,7 @@ export default class Home extends Component {
         </div>
 
         <br />
-        <Button onClick={this.randomize}>Losuj liczbę</Button>
+        <Button onClick={()=>{this.randomize(-1)}}>Losuj liczbę</Button>
         <br />
         Welcome to SkinsMasters! Number <div style={{ color: this.state.color }}>{roulette.numbers[this.state.number]}</div>
       </div>

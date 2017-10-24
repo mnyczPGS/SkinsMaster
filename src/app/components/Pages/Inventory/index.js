@@ -41,6 +41,7 @@ class Inventory extends Component {
   }
 
   getInventory(id) {
+    console.log(id);
     getUserInventory(id)
       .then((inventory) => {
         this.setTradableItems(inventory.descriptions)
@@ -52,9 +53,15 @@ class Inventory extends Component {
     let inventory = [];
     items.forEach((item, index) => {
       if (item.tradable === 1) {
-        inventory1.push(item);
+        inventory1.push({
+          market_hash_name: item.market_hash_name,
+          icon_url: item.icon_url,
+          name: item.name,
+          name_color: item.name_color          
+        });
       }
     })
+    console.log('11111',inventory1)
     getItemsData(inventory1)
     .then((inventory)=>{
     this.setState({ inventory })

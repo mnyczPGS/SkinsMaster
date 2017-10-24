@@ -7,7 +7,8 @@ var path = require('path')
   , passportSteam = require('passport-steam')
   , session = require('express-session')
   , passport = require('passport')
-  , firebase = require('firebase');
+  , firebase = require('firebase')
+  , randomizeNumber = require('./actions/randomizeNumber');
 
 // IMPORT //
 var apiRoutes = require('./routes/api');
@@ -59,5 +60,5 @@ app.use('/*', indexRoutes);
 app.use(function (err, req, res, next) {
   res.status(err.status || 500);
 });
-
+randomizeNumber.randomizeRoulette();
 module.exports = app;
