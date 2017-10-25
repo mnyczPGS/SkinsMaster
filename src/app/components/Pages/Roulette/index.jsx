@@ -51,6 +51,9 @@ export default class Home extends Component {
       });
       this.setState({ lastNumbers })
     })
+    firebase.database().ref('rouletteCountdown').on('value', snap =>{
+      console.log(snap.val());
+    });
   }
 
   generateSeries(drawn = -1) {

@@ -56358,6 +56358,9 @@ var Home = function (_Component) {
         });
         _this2.setState({ lastNumbers: lastNumbers });
       });
+      _firebase2.default.database().ref('rouletteCountdown').on('value', function (snap) {
+        console.log(snap.val());
+      });
     }
   }, {
     key: 'generateSeries',
