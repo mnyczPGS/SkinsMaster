@@ -29,6 +29,7 @@ class IncreaseAmmount extends Component {
     let child = this.props.steamData.id;
     console.log(this.props.steamData)
     let pushData = {
+      ammount: this.state.myAmmount,
       id: this.props.steamData.id,
       name: this.props.steamData.name,
       avatar: this.props.steamData.avatar

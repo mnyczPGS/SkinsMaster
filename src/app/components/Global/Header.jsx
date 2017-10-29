@@ -51,7 +51,7 @@ class Menu extends Component {
     fetch('/api/v1/user/auth/account', { method: "GET", credentials: 'include', timeout: 1000 })
       .then((data) => { return ('Account: ', data.json()) })
       .then((user) => {
-        this.props.dispatch(setSteamId(user.id, user.displayName, user.photos[0].value));
+        this.props.dispatch(setSteamId(user.id, user.displayName, user.photos[0]));
         this.setState({ user, loggedIn: true })
       })
       .catch(() => {
