@@ -1,19 +1,32 @@
 $poleWidth: 5vw;
 
-.Roulette{
-  .lastDrawned{
+.Roulette {
+  width: 50vw;
+  margin: 0 auto;
+
+  .progress {
+    margin: 0 auto;
+    width: 50vw;
+
+    &-bar {
+      transition: 10s linear all;
+    }
+  }
+
+  .lastDrawned {
     width: 100%;
     height: 200px;
     display: flex;
     justify-content: center;
-    .lastNumbers{
-      width: 50%;
+
+    .lastNumbers {
+      width: 100%;
       justify-content: center;
       align-items: center;
-  
-      .lastNumber{
-        display: flex;
-        width: 10%;
+
+      .lastNumber {
+        display: inline-flex;
+        width: 5vw;
         height: 55px;
         justify-content: center;
         align-items: center;
@@ -21,19 +34,20 @@ $poleWidth: 5vw;
     }
   }
 
-  .drawn{
+  .drawn {
     overflow: hidden;
     width: 10*$poleWidth;
-    margin: 0 auto;
+    margin: 20px auto;
     border-left: 1px solid black;
     border-right: 1px solid black;
 
-    .numbers{
+    .numbers {
       height: 50px;
       width: 222*$poleWidth;
       position: relative;
       left: 0;
-      .number{
+
+      .number {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -41,21 +55,129 @@ $poleWidth: 5vw;
       }
     }
 
-    .duringDrawn{
+    .duringDrawn {
       left: -89*$poleWidth;
     }
 
-    .endedDrawn{
-
-    }
-
-    .divider{
+    .divider {
       width: 2px;
       height: 60px;
       position: absolute;
       background-color: red;
       left: 50vw;
       margin-top: -5px;
+    }
+  }
+
+  .ammount {
+    margin: 20px auto;
+    width: 50vw;
+
+    .IncreaseAmmount {
+      display: inline-flex;
+      width: 100%;
+
+      .row {
+        width: 100%;
+      }
+
+      .btn-group {
+        width: 100%;
+
+        .black {
+          background-color: #191919;
+          border-top-right-radius: .4em;
+          border: 0;
+
+          &:focus {
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.5);
+          }
+        }
+      }
+
+      Input {
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+      }
+
+      .donate {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+      }
+    }
+  }
+
+  .Rates {
+    .fade {
+      &-enter {
+        opacity: 0;
+
+        &-active {
+          opacity: 1;
+          transition: opacity 300ms ease-in;
+        }
+      }
+
+      &-leave {
+        opacity: 1;
+
+        &-active {
+          opacity: 0;
+          transition: opacity 300ms ease-out;
+        }
+      }
+    }
+
+    ul {
+      padding: 5px 10px;
+    }
+
+    .players {
+      list-style: none;
+    }
+
+    .row {
+      border-radius: 5px;
+      margin: 0;
+      padding: 0;
+
+      .header {
+        border: 2px solid black;
+
+        &:last-child {}
+      }
+
+      .green {
+        background-color: #28a745;
+      }
+
+      .black {
+        background-color: #191919;
+        border-top-right-radius: .4em;
+      }
+
+      .red {
+        background-color: #dc3545;
+        border-top-left-radius: .4em;
+      }
+
+      .col-4 {
+        padding: 0;
+      }
+    }
+  }
+}
+
+.container {
+  padding: 0;
+
+  .row {
+    margin: 0;
+
+    .col-12 {
+      padding: 0;
+      display: inherit;
     }
   }
 }
