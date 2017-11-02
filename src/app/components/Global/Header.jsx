@@ -11,7 +11,7 @@ class Menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {id: null},
+      user: { id: null },
       loggedIn: false,
       collapsed: true,
       dropdownOpen: false,
@@ -28,7 +28,7 @@ class Menu extends Component {
     this.test = 'asd';
   }
 
-  componentDidMount(){
+  componentDidMount() {
   }
 
   componentWillMount() {
@@ -59,6 +59,10 @@ class Menu extends Component {
       .then((user) => {
         this.props.dispatch(setSteamId(user.id, user.displayName, user.photos[0]));
         this.setState({ user, loggedIn: true })
+        this.userRef.child(user.id).on('value', snap => {
+          console.log('Header', snap.val().ammount)
+          this.setState({ userAmmount: snap.val().ammount })
+        })
       })
       .catch(() => {
         let user = { "provider": "steam", "_json": { "steamid": "76561198145597332", "communityvisibilitystate": 3, "profilestate": 1, "personaname": "Kill-O-reN", "lastlogoff": 1508397776, "commentpermission": 1, "profileurl": "http://steamcommunity.com/id/FOX_The_Mister/", "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1.jpg", "avatarmedium": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_medium.jpg", "avatarfull": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_full.jpg", "personastate": 0, "primaryclanid": "103582791440727404", "timecreated": 1405758746, "personastateflags": 0 }, "id": "76561198145597332", "displayName": "Kill-O-reN", "photos": [{ "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1.jpg" }, { "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_medium.jpg" }, { "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_full.jpg" }], "identifier": "http://steamcommunity.com/openid/id/76561198145597332" };
@@ -67,14 +71,11 @@ class Menu extends Component {
         this.props.dispatch(setSteamId(user.id, user.displayName, user.photos[0]));
         this.setState({ user });
         this.setState({ loggedIn: true });
+        this.userRef.child(user.id).on('value', snap => {
+          console.log('Header', snap.val().ammount)
+          this.setState({ userAmmount: snap.val().ammount })
+        })
       })
-    setTimeout(() => {
-      console.log(this.state.user.id)
-      this.userRef.child(this.state.user.id).on('value',snap =>{
-      console.log('Header', snap.val().ammount)
-        this.setState({userAmmount: snap.val().ammount})
-      })
-    }, 100);
   }
   logOut() {
     let user = {}

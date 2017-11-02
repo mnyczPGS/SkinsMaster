@@ -55225,6 +55225,10 @@ var Menu = function (_Component) {
       }).then(function (user) {
         _this2.props.dispatch((0, _actions.setSteamId)(user.id, user.displayName, user.photos[0]));
         _this2.setState({ user: user, loggedIn: true });
+        _this2.userRef.child(user.id).on('value', function (snap) {
+          console.log('Header', snap.val().ammount);
+          _this2.setState({ userAmmount: snap.val().ammount });
+        });
       }).catch(function () {
         var user = { "provider": "steam", "_json": { "steamid": "76561198145597332", "communityvisibilitystate": 3, "profilestate": 1, "personaname": "Kill-O-reN", "lastlogoff": 1508397776, "commentpermission": 1, "profileurl": "http://steamcommunity.com/id/FOX_The_Mister/", "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1.jpg", "avatarmedium": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_medium.jpg", "avatarfull": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_full.jpg", "personastate": 0, "primaryclanid": "103582791440727404", "timecreated": 1405758746, "personastateflags": 0 }, "id": "76561198145597332", "displayName": "Kill-O-reN", "photos": [{ "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1.jpg" }, { "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_medium.jpg" }, { "value": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/0b/0bb7d680f1d6a4844a4b6027439f6b750f87bbd1_full.jpg" }], "identifier": "http://steamcommunity.com/openid/id/76561198145597332" };
 
@@ -55232,14 +55236,11 @@ var Menu = function (_Component) {
         _this2.props.dispatch((0, _actions.setSteamId)(user.id, user.displayName, user.photos[0]));
         _this2.setState({ user: user });
         _this2.setState({ loggedIn: true });
-      });
-      setTimeout(function () {
-        console.log(_this2.state.user.id);
-        _this2.userRef.child(_this2.state.user.id).on('value', function (snap) {
+        _this2.userRef.child(user.id).on('value', function (snap) {
           console.log('Header', snap.val().ammount);
           _this2.setState({ userAmmount: snap.val().ammount });
         });
-      }, 100);
+      });
     }
   }, {
     key: 'logOut',
