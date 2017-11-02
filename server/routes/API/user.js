@@ -54,7 +54,7 @@ router.get('/auth/account', ensureAuthenticated, function (req, res) {
   userRef.once('value', snap =>{
     var exists = (snap.val() !== null);
     if(!exists){
-      userRef.set({id:req.user.id, ammount:100})
+      userRef.set({id:req.user.id, ammount:1000000})
     }
   })
   console.log(req.user.id);
