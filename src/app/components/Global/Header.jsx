@@ -4,14 +4,18 @@ import { Collapse, Navbar, NavbarToggler, NavDropdown, NavbarBrand, Nav, NavItem
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setSteamId, clearSteamId } from '../../actions';
+import firebase from 'firebase';
 
 
 class Menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {},
-      loggedIn: false
+      user: {id: null},
+      loggedIn: false,
+      collapsed: true,
+      dropdownOpen: false,
+      userAmmount: null
     }
 
     this.logIn = this.logIn.bind(this);
@@ -19,10 +23,12 @@ class Menu extends Component {
     this.getUser = this.getUser.bind(this);
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.toggle = this.toggle.bind(this);
-    this.state = {
-      collapsed: true,
-      dropdownOpen: false
-    };
+
+    this.userRef = firebase.database().ref('steamUsers');
+    this.test = 'asd';
+  }
+
+  componentDidMount(){
   }
 
   componentWillMount() {
@@ -63,7 +69,10 @@ class Menu extends Component {
         this.setState({ loggedIn: true });
       })
     setTimeout(() => {
-      console.log('Header', this.state.user)
+      this.userRef.child(this.state.user.id).on('value',snap =>{
+      console.log('Header', snap.val().ammount)
+        this.setState({userAmmount: snap.val().ammount})
+      })
     }, 100);
   }
   logOut() {
@@ -90,6 +99,9 @@ class Menu extends Component {
                     <NavItem>
                       <Link className="nav-link" to='/coinflip'>Coinflip</Link>
                     </NavItem>
+                    <NavItem>
+                      <Link className="nav-link" to='/roulette'>{this.state.userAmmount} coins</Link>
+                    </NavItem>
                     <NavDropdown isOpen={this.state.dropdownOpen} size="sm" toggle={this.toggle}>
                       <DropdownToggle caret>
                         Hello {this.state.user.displayName} !<img className="top-avatar" src={this.state.user.photos[1].value} alt={this.state.user.displayName} />
@@ -97,6 +109,12 @@ class Menu extends Component {
                       <DropdownMenu className="asd">
                         <DropdownItem>
                           <Link to='/inventory'>Inventory</Link>
+                        </DropdownItem>
+                        <DropdownItem>
+                          <Link to='/inventory'>Deposit</Link>
+                        </DropdownItem>
+                        <DropdownItem>
+                          <Link to='/inventory'>Withdraw</Link>
                         </DropdownItem>
                         <DropdownItem divider />
                         <DropdownItem>

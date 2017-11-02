@@ -50,6 +50,14 @@ function (req, res) {
 //   });
 
 router.get('/auth/account', ensureAuthenticated, function (req, res) {
+  let userRef = firebase.database().ref('steamUsers').child(req.user.id);
+  userRef.once('value', snap =>{
+    var exists = (snap.val() !== null);
+    if(!exists){
+      userRef.set({id:req.user.id, ammount:100})
+    }
+  })
+  console.log(req.user.id);
   res.send(req.user);
 });
 
