@@ -55234,6 +55234,7 @@ var Menu = function (_Component) {
         _this2.setState({ loggedIn: true });
       });
       setTimeout(function () {
+        console.log(_this2.state.user.id);
         _this2.userRef.child(_this2.state.user.id).on('value', function (snap) {
           console.log('Header', snap.val().ammount);
           _this2.setState({ userAmmount: snap.val().ammount });

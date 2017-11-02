@@ -69,6 +69,7 @@ class Menu extends Component {
         this.setState({ loggedIn: true });
       })
     setTimeout(() => {
+      console.log(this.state.user.id)
       this.userRef.child(this.state.user.id).on('value',snap =>{
       console.log('Header', snap.val().ammount)
         this.setState({userAmmount: snap.val().ammount})
