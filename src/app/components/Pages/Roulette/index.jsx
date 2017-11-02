@@ -232,10 +232,7 @@ class Roulette extends Component {
           <IncreaseAmmount showAlert={this.showAlert}/>
         </div>
         <Rates />
-        <br />
-        <Button onClick={() => { this.randomize(-1) }}>Losuj liczbę</Button>
-        <br />
-        Welcome to SkinsMasters! Number <div style={{ color: this.state.color }}>{roulette.numbers[this.state.number]}</div>
+        
       </div>
     );
   }

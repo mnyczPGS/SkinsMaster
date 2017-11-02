@@ -72375,22 +72375,7 @@ var Roulette = function (_Component) {
           { className: 'ammount' },
           _react2.default.createElement(_IncreaseAmmount2.default, { showAlert: this.showAlert })
         ),
-        _react2.default.createElement(_Rates2.default, null),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          _reactstrap.Button,
-          { onClick: function onClick() {
-              _this4.randomize(-1);
-            } },
-          'Losuj liczb\u0119'
-        ),
-        _react2.default.createElement('br', null),
-        'Welcome to SkinsMasters! Number ',
-        _react2.default.createElement(
-          'div',
-          { style: { color: this.state.color } },
-          roulette.numbers[this.state.number]
-        )
+        _react2.default.createElement(_Rates2.default, null)
       );
     }
   }]);
