@@ -8,129 +8,87 @@ export default class Rates extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rates:{
-        black: [],
-        green: [],
-        red: []
-      },
       red: [],
       green: [],
       black: [],
       in: false
     }
-    
+
     this.setRates = this.setRates.bind(this);
+    this.setRefs = this.setRefs.bind(this);
+    this.renderColor = this.renderColor.bind(this);
+    this.ratesRef = firebase.database().ref('rates');
   }
-  
-  componentDidMount(){
+
+  componentDidMount() {
     let ratesRef = firebase.database().ref('rates');
 
-    ratesRef.child('black').on('value', snap =>{
-      let black = []
+    this.setRefs('red');
+    this.setRefs('green');
+    this.setRefs('black');
+  }
+
+  setRefs(colorName) {
+    this.ratesRef.child(colorName).limitToLast(10).orderByChild("ammount").on('value', snap => {
+      let colors = [];
+      let tmpColors = [];
       snap.forEach((color) => {
-        black.push({name:color.key, value: color.val()})
-     });
-     this.setRates('black',black)
-    })
-    ratesRef.child('green').on('value', snap =>{
-      let green = []
-      snap.forEach((color) => {
-        green.push({name:color.key, value: color.val()})
-     });
-     this.setRates('green',green)
-    })
-    ratesRef.child('red').on('value', snap =>{
-      let red = []
-      snap.forEach((color) => {
-        red.push({name:color.key, value: color.val()})
-     });
-     this.setRates('red',red)
+        tmpColors.push({ name: color.key, value: color.val() })
+      });
+      for (let i = tmpColors.length - 1; i >= 0; i--) {
+        colors.push(tmpColors[i])
+      }
+      this.setRates(colorName, colors)
     })
   }
 
-  setRates(color,players){
-    this.setState({[color]:players})
+  setRates(color, players) {
+    this.setState({ [color]: players })
   }
-  render() {
-    console.log(this.props.name, this.props.avatar)
+
+  renderColor(colorName) {
+    let color = this.state[colorName]
     return (
-      <div className="Rates">
-        <Row>
-          <Col xs={4}>
-            <div className="header red">RED</div>
-            <div className="column">
-              <ul>
-              <ReactCSSTransitionGroup
+      <Col xs={4}>
+        <div className={'header '+ colorName}>{colorName}</div>
+        <div className="column">
+          <ul>
+            <ReactCSSTransitionGroup
               transitionName="fade"
               transitionEnterTimeout={300}
               transitionLeaveTimeout={300}
               transitionAppear={true}
               transitionAppearTimeout={1000}>
-                {
-                  this.state.red.map((bet, index) =>{
-                    console.log(bet)
-                  return( 
+              {
+                color.map((bet, index) => {
+
+                  return (
                     <li className="players" key={index}>
-                    <img src={bet.value.avatar} alt={bet.value.name}/>
-                    {bet.value.name} - {bet.value.ammount}
+                      <img src={bet.value.avatar} alt={bet.value.name} />
+                      {bet.value.name} - {bet.value.ammount}
                     </li>
                   )
-                  })
-                }   
-                </ReactCSSTransitionGroup>     
-              </ul>
-            </div>
-          </Col>
-          <Col xs={4}>
-            <div className="header green">GREEN</div>
-            <div className="column">
-            <ul>
-            <ReactCSSTransitionGroup
-            transitionName="fade"
-            transitionEnterTimeout={300}
-            transitionLeaveTimeout={300}
-            transitionAppear={true}
-            transitionAppearTimeout={1000}>
-            {
-              this.state.green.map((bet, index) =>{
-                console.log(bet)
-              return( 
-                <li className="players" key={index}>
-                <img src={bet.value.avatar} alt={bet.value.name}/>
-                {bet.value.name} - {bet.value.ammount}
-                </li>
-              )
-              })
-            }    
-              </ReactCSSTransitionGroup>  
-              </ul>
-          </div>
-          </Col>
-          <Col xs={4}>
-            <div className="header black">BLACK</div>
-            <div className="column">
-            <ul>
-            <ReactCSSTransitionGroup
-            transitionName="fade"
-            transitionEnterTimeout={300}
-            transitionLeaveTimeout={300}
-            transitionAppear={true}
-            transitionAppearTimeout={1000}>
-            {
-              this.state.black.map((bet, index) =>{
-                console.log(bet)
-              return( 
-                <li className="players" key={index}>
-                <img src={bet.value.avatar} alt={bet.value.name}/>
-                {bet.value.name} - {bet.value.ammount}
-                </li>
-              )
-              })
-            }      
-              </ReactCSSTransitionGroup>  
-            </ul>
-          </div>
-          </Col>
+                })
+              }
+            </ReactCSSTransitionGroup>
+          </ul>
+        </div>
+      </Col>
+    )
+  }
+  render() {
+    return (
+      <div className="Rates">
+        <Row>
+          {
+            this.renderColor('red')
+          }
+          {
+            this.renderColor('green')
+          }
+          {
+            this.renderColor('black')
+          }
         </Row>
       </div>
     );

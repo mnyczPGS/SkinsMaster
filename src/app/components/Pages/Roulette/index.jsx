@@ -4,6 +4,9 @@ import { Button, Progress } from 'reactstrap';
 import firebase from 'firebase';
 import IncreaseAmmount from './IncreaseAmmount';
 import Rates from './Rates';
+import { showAlert } from '../../../actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import './style.scss'
@@ -17,7 +20,7 @@ const roulette = {
 
 let firstDraw = true;
 
-export default class Home extends Component {
+class Roulette extends Component {
   constructor(props) {
     super(props);
 
@@ -38,10 +41,15 @@ export default class Home extends Component {
     this.rememberLastNumbers = this.rememberLastNumbers.bind(this);
     this.generateSeries = this.generateSeries.bind(this);
     this.generateDrawn = this.generateDrawn.bind(this);
+    this.showAlert = this.showAlert.bind(this);
   }
 
   componentWillMount() {
     this.generateSeries();
+  }
+
+  showAlert(msg){
+    this.props.dispatch(showAlert(msg));
   }
 
   componentDidMount() {
@@ -83,7 +91,6 @@ export default class Home extends Component {
         otherNumbers.push(i - 185);
       }
     }
-    console.log(otherNumbers)
     this.setState({ otherNumbers });
   }
 
@@ -102,7 +109,7 @@ export default class Home extends Component {
   }
 
   randomize(number = -1) {
-    console.log('GO!', number)
+    console.log('New number!', number)
 
     var drawn = -1;
     if (number == -1) {
@@ -120,15 +127,13 @@ export default class Home extends Component {
 
 
     if (firstDraw) {
-      console.log('asdasd', firstDraw)
       this.setState({ number, color: this.checkColor(drawn) })
       document.getElementById('numbers').style.left = -((143 * 5) + (drawn * 5) + (ran)) + 'vw';
       firstDraw = false;
     } else {
-      console.log('nooooooooooooooo', firstDraw)
       document.getElementById('numbers').style.left = '0vw';
       setTimeout(() => {
-        console.log('rand', ran / 5 * 100)
+        console.log('move ', ran / 5 * 100, '% to right')
         document.getElementById('numbers').style.transition = 'all 10s ease-out';
         document.getElementById('numbers').style.left = -((143 * 5) + (drawn * 5) + (ran)) + 'vw';
 
@@ -224,7 +229,7 @@ export default class Home extends Component {
           </div>
         </div>
         <div className="ammount">
-          <IncreaseAmmount />
+          <IncreaseAmmount showAlert={this.showAlert}/>
         </div>
         <Rates />
         <br />
@@ -235,3 +240,7 @@ export default class Home extends Component {
     );
   }
 }
+function mapDispatchToProps(dispatch) {
+  return { actions: bindActionCreators(showAlert, dispatch) }
+}
+export default connect(mapDispatchToProps)(Roulette);
